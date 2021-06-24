@@ -7,21 +7,11 @@ public class MainClass {
 	public static void main(String[] args) throws Exception {
 
 		Item i1 = new Item(100, 20);
-	  /*Item i2 = new Item(200, 30);
-		Item i3 = new Item(300, 10);
-		Item i4 = new Item(400, 15);
-
-		ArrayList<Item> items = new ArrayList<>();
-		items.add(i1);
-		items.add(i2);
-		items.add(i3);
-		items.add(i4);*/
 
 		Supplier supp1 = new Supplier("supp101", "ABC", "0502375262", "abc@abc.com", 1001, 789);
 		Purchase pur1 = new Purchase(700, 2000, new Date(2002, 12, 23), supp1, i1, "Card", new Date(2013, 26, 12), 800.36, 10.45);
 
 		ArrayList<Supplier> supplierList = new ArrayList<>();
-//		supplierList.add(supp1);
 		ArrayList<Purchase> purchaseList = new ArrayList<>();
 		purchaseList.add(pur1);
 
@@ -92,24 +82,6 @@ public class MainClass {
 			}//switch end
 		}//while end
 	}//Main End
-
-	/*
-	Purchase
-	 - Successful
-	 .- Unsuccessful. Purchase order details already exists (id exists)
-	 .- Unsuccessful. Purchase order should be entered (Blank/Empty)
-	 .- Unsuccessful. TRN number should be of 6 digits
-	 .- Unsuccessful. Invalid purchase date.
-	 .- Unsuccessful. Supplier ID should be entered
-	 .- Unsuccessful. Item Number should be present
-	 .- Unsuccessful. Quantity should be in numerical values
-	 .- Unsuccessful. Quantity should be entered
-	 .- Unsuccessful. Mode of payment should be entered (Blank/Empty)
-	 .- Unsuccessful. Mode of payment should be either of card / cheque / bank transfer
-	 .- Unsuccessful. Purchase date should be before the payment due date.
-	 .- Unsuccessful. Payment due date should be entered
-	 .- Unsuccessful. Cost of the PO should be entered
-	 */
 
 	public static Purchase addPurchase(ArrayList<Purchase> list, ArrayList<Supplier> list2) throws Exception {
 		System.out.println("*** Add Purchase ***");
