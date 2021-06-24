@@ -21,44 +21,57 @@ public class MainClass {
         ArrayList<Purchase> purchaseList = new ArrayList<>();
         purchaseList.add(pur1);
 
-        System.out.println("Accounting System\n" +
-                            "*******Purchases*******\n" +
-                            "\t1. Add purchase\n" +
-                            "\t2. Remove purchase\n" +
-                            "\t3. View purchase\n" +
-                            "*******Supplier*******\n" +
-                            "\t4. Add Supplier\n" +
-                            "\t5. Remove Supplier\n" +
-                            "\t6. View Supplier\n");
-        int choice = 0;
-        System.out.println("Enter your choice (1-6)");
-        choice = sc.nextInt();
-        ArrayList<Supplier> supplist = new ArrayList<>();
-        switch (choice) {
-            case 1:
-                addPurchase(purchaseList, supplierList);
-                break;
-            case 2:
-                int index = removePurchase(purchaseList);
-                break;
-            case 3: viewPurchase(purchaseList); break;
-            case 4: {
-                Supplier s1 = addSupplier(supplist);
-                supplist.add(s1); // remove if not call by refernece
-                break;
-            }
-
-            case 5:
-                int pos = deleteSupplier(supplierList);
-                if (pos == -1) {
-                    System.out.println("Supplier Doesnt Exist");
+        System.out.println("""
+                Accounting System
+                *******Purchases*******
+                \t1. Add purchase
+                \t2. Remove purchase
+                \t3. View purchase
+                *******Supplier*******
+                \t4. Add Supplier
+                \t5. Remove Supplier
+                \t6. View Supplier
+                """);
+        int kk = 0;
+        while (kk++ < 3) {
+            int choice;
+            System.out.println("Enter your choice (1-6)");
+            choice = sc.nextInt();
+            ArrayList<Supplier> supplist = new ArrayList<>();
+            switch (choice) {
+                case 1:
+                    addPurchase(purchaseList, supplierList);
+                    break;
+                case 2:
+                    int index = removePurchase(purchaseList);
+                    if (index == -1) {
+                        System.out.println("Purchase Number Doesnt Exist");
+                    } else purchaseList.remove(index);
+                    break;
+                case 3:
+                    viewPurchase(purchaseList);
+                    break;
+                case 4: {
+                    Supplier s1 = addSupplier(supplist);
+                    supplist.add(s1); // remove if not call by refernece
+                    break;
                 }
-                else supplierList.remove(pos);
 
-                break;
-            case 6: viewSupplier(supplierList); break;
-            default: System.out.println("Enter a value between 1-6"); break;
-        }
+                case 5:
+                    int pos = deleteSupplier(supplierList);
+                    if (pos == -1) {
+                        System.out.println("Supplier Doesnt Exist");
+                    } else supplierList.remove(pos);
+
+                    break;
+                case 6:
+                    viewSupplier(supplierList);
+                    break;
+                default:
+                    System.out.println("Enter a value between 1-6");
+                    break;
+            }//switch end
+        }//while end
     }
 
     /*
@@ -206,8 +219,6 @@ public class MainClass {
         double cost = sc.nextDouble();
 
         double VAT = 0.05*cost;
-
-
     }
 
 
