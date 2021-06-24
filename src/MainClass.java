@@ -21,7 +21,7 @@ public class MainClass {
 		Purchase pur1 = new Purchase(700, 2000, new Date(2002, 12, 23), supp1, i1, "Card", new Date(2013, 26, 12), 800.36, 10.45);
 
 		ArrayList<Supplier> supplierList = new ArrayList<>();
-		supplierList.add(supp1);
+//		supplierList.add(supp1);
 		ArrayList<Purchase> purchaseList = new ArrayList<>();
 		purchaseList.add(pur1);
 
@@ -36,8 +36,7 @@ public class MainClass {
 				\t5. Remove Supplier
 				\t6. View Supplier
 				""");
-		ArrayList<Supplier> supplist = new ArrayList<>();
-		int choice = 0, kk = 0;
+		int choice = 0;
 
 		while (true) {
 			System.out.println("Enter your choice (1-6)");
