@@ -4,6 +4,7 @@ public class Item {
     private int qty;
 
     //Constructor
+    public Item(){}
     public Item(int itemNo, int qty) {
         this.itemNo = itemNo;
         this.qty = qty;

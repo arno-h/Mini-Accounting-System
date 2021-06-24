@@ -1,3 +1,4 @@
+import java.io.InvalidClassException;
 import java.util.*;
 
 public class MainClass {
@@ -6,7 +7,7 @@ public class MainClass {
 	public static void main(String[] args) throws Exception {
 
 		Item i1 = new Item(100, 20);
-		Item i2 = new Item(200, 30);
+	  /*Item i2 = new Item(200, 30);
 		Item i3 = new Item(300, 10);
 		Item i4 = new Item(400, 15);
 
@@ -14,10 +15,10 @@ public class MainClass {
 		items.add(i1);
 		items.add(i2);
 		items.add(i3);
-		items.add(i4);
+		items.add(i4);*/
 
 		Supplier supp1 = new Supplier("supp101", "ABC", "0502375262", "abc@abc.com", 1001, 789);
-		Purchase pur1 = new Purchase(700, 2000, new Date(2002, 12, 23), supp1, items, "Card", new Date(2013, 26, 12), 800.36, 10.45);
+		Purchase pur1 = new Purchase(700, 2000, new Date(2002, 12, 23), supp1, i1, "Card", new Date(2013, 26, 12), 800.36, 10.45);
 
 		ArrayList<Supplier> supplierList = new ArrayList<>();
 		supplierList.add(supp1);
@@ -38,31 +39,42 @@ public class MainClass {
 		ArrayList<Supplier> supplist = new ArrayList<>();
 		int choice = 0, kk = 0;
 
-		while (kk++ < 3) {
+		while (true) {
 			System.out.println("Enter your choice (1-6)");
 			choice = sc.nextInt();
 			switch (choice) {
-				case 1:
-					addPurchase(purchaseList, supplierList);
+				case 1: {
+					try {
+						Purchase p1 = addPurchase(purchaseList, supplierList);
+						purchaseList.add(p1); // remove if not call by refernece
+						break;
+					} catch (Exception e) {
+						System.out.println(e.getMessage());
+					}
 					break;
+				}
+
 				case 2:
 					int index = removePurchase(purchaseList);
 					if (index == -1) {
 						System.out.println("Purchase Number Doesnt Exist");
 					} else purchaseList.remove(index);
 					break;
+
 				case 3:
 					viewPurchase(purchaseList);
 					break;
-				case 4:
+
+				case 4: {
 					try {
-						Supplier s1 = addSupplier(supplist);
-						supplist.add(s1); // remove if not call by refernece
+						Supplier s1 = addSupplier(supplierList);
+						supplierList.add(s1); // remove if not call by refernece
 						break;
 					} catch (Exception e) {
-						e.toString();
+						System.out.println(e.getMessage());
 					}
 					break;
+				}
 
 				case 5:
 					int pos = deleteSupplier(supplierList);
@@ -77,30 +89,30 @@ public class MainClass {
 
 				default:
 					System.out.println("Enter a value between 1-6");
-					break;
+					System.exit(0);
 			}//switch end
 		}//while end
-	}
+	}//Main End
 
-    /*
-    Purchase
-     - Successful
-     - Unsuccessful. Purchase order details already exists (id exists)
-     - Unsuccessful. Purchase ID should be entered (Blank/Empty)
-     - Unsuccessful. Purchase date should be before the payment due date.
-     - Unsuccessful. Mode of payment should be entered (Blank/Empty)
-     - Unsuccessful. Mode of payment should be either of card / cheque / bank transfer
-     - Unsuccessful. Invalid purchase date.
-     - Unsuccessful. Quantity should be in numerical values
-     - Unsuccessful. Quantity should be entered
-     - Unsuccessful. TRN number should be of 6 digits
-     - Unsuccessful. Supplier ID should be entered
-     - Unsuccessful. Item Number should be present
-     - Unsuccessful. Cost of the PO should be entered
-     - Unsuccessful. Payment due date should be entered
-     */
+	/*
+	Purchase
+	 - Successful
+	 .- Unsuccessful. Purchase order details already exists (id exists)
+	 .- Unsuccessful. Purchase order should be entered (Blank/Empty)
+	 .- Unsuccessful. TRN number should be of 6 digits
+	 .- Unsuccessful. Invalid purchase date.
+	 .- Unsuccessful. Supplier ID should be entered
+	 .- Unsuccessful. Item Number should be present
+	 .- Unsuccessful. Quantity should be in numerical values
+	 .- Unsuccessful. Quantity should be entered
+	 .- Unsuccessful. Mode of payment should be entered (Blank/Empty)
+	 .- Unsuccessful. Mode of payment should be either of card / cheque / bank transfer
+	 .- Unsuccessful. Purchase date should be before the payment due date.
+	 .- Unsuccessful. Payment due date should be entered
+	 .- Unsuccessful. Cost of the PO should be entered
+	 */
 
-	public static void addPurchase(ArrayList<Purchase> list, ArrayList<Supplier> list2) {
+	public static Purchase addPurchase(ArrayList<Purchase> list, ArrayList<Supplier> list2) throws Exception {
 		System.out.println("*** Add Purchase ***");
 		System.out.println("Enter Purchase Number: ");
 		// purchase number
@@ -131,13 +143,13 @@ public class MainClass {
 		}
 		//If String given for Purchase Number
 		catch (java.lang.NumberFormatException e) {
-			System.out.println("Unsuccessful. Invalid purchase Number Format");
+			throw new Exception("Unsuccessful. Invalid purchase Number Format");
 		}
+
 		// purchase number
 
 		// TRN no.
 		System.out.println("Enter TRN No.");
-		sc.nextLine();
 		int trn_number = sc.nextInt();
 		if (trn_number <= 0) {
 			System.out.println("Unsuccessful. TRN number should be of 6 digits");
@@ -161,7 +173,12 @@ public class MainClass {
 
 		System.out.println("Enter Year: ");
 		int year = sc.nextInt();
+		if (year <= 0) {
+			throw new Exception("Unsuccessful. Invalid purchase date.");
+		}
+
 		// Date
+		Date purchaseDate = new Date(year, month, day);
 
 		// Supplier ID
 		System.out.println("Enter Supplier ID");
@@ -193,8 +210,8 @@ public class MainClass {
 
 		//Item quanitity
 		System.out.println("Enter Item quantity : ");
-		sc.nextLine();
-		String quanitity_temp = sc.next();
+		//sc.nextLine();
+		String quanitity_temp = sc.nextLine();
 
 		if (quanitity_temp.isEmpty() || quanitity_temp.equals(" ")) {
 			System.out.println("Unsuccessful. Cannot leave Purchase No field empty");
@@ -202,12 +219,11 @@ public class MainClass {
 		}
 
 		try {
-			int quantity = Integer.parseInt(quanitity_temp);
-
+			quantity = Integer.parseInt(quanitity_temp);
 		}
 		//If String given for Purchase Number
 		catch (java.lang.NumberFormatException e) {
-			System.out.println("Unsuccessful. Quantity should be in numerical values");
+			throw new Exception("Unsuccessful. Quantity should be in numerical values");
 		}
 
 
@@ -221,13 +237,27 @@ public class MainClass {
 		int due_month = sc.nextInt();
 		int due_year = sc.nextInt();
 
+		Date purchaseDueDate = new Date(due_year, due_month, due_day);
+		if (purchaseDueDate.before(purchaseDate)) {
+			throw new Exception("Unsuccessful. Purchase date should be before the Payment Due Date.");
+		}
+
 		//total cost
 		System.out.println("Enter total cost : ");
 		double cost = sc.nextDouble();
 
-		double VAT = 0.05 * cost;
-	}
+		if (tempcost.isEmpty() || tempcost.equals(" ")) {
+			throw new Exception("Unsuccessful. Cost of the PO should be entered");
+		}
+		double cost = Double.parseDouble(tempcost);
 
+		// vat amount
+		double vat = 0.05 * cost;
+
+		// newPurchase Creation
+		Purchase newPurchase = new Purchase(purchaseNo, trn_number, purchaseDate, list2.get(count), itemObject, mode, purchaseDueDate, cost, vat);
+		return newPurchase;
+	}
 
 	public static int removePurchase(ArrayList<Purchase> list) {
 		System.out.println("*** Remove Purchase ***");
@@ -301,7 +331,7 @@ public class MainClass {
 		catch (java.lang.NumberFormatException e) {
 			System.out.println("Unsuccessful. Invalid purchase Number Format");
 		}
-	}
+	}//Function View Purchase End
 
 	public static Supplier addSupplier(ArrayList<Supplier> suparr) throws Exception {
 		Scanner sc = new Scanner(System.in);
@@ -310,6 +340,7 @@ public class MainClass {
 		String suppID = sc.nextLine();
 
 		for (int i = 0; i < suparr.size(); i++) {
+
 			if (suparr.get(i).getSupplierId() == suppID) {
 				throw new IdDoesNotExistException("Error: Supplier not added, SupplierID already exists in the system.");
 			}
@@ -318,31 +349,45 @@ public class MainClass {
 		//If supplier field is empty
 		if (suppID.isEmpty() || suppID.equals(" ")) {
 			throw new Exception("Error: The Supplier ID input field cannot be empty/blank");
+
+
 		}
 
 		System.out.println("Enter companyName: ");
+
+
 		String companyName = sc.nextLine();
 
 		if (companyName.isEmpty() || companyName.equals(" ")) {
 			throw new Exception("Error: Supplier not added, Company Name is left blank");
+
+
 		}
+
 
 		System.out.println("Enter Contact Number: ");
 		String number = sc.nextLine();
 
 		if (number.isEmpty() || number.equals(" ")) {
 			throw new Exception("Error: Supplier not added, Contact Details Number is left blank.");
+
+
 		}
+
 
 		if (!(number.substring(0, 2).equals("05")) || number.length() != 10) {
 			throw new Exception("Error: Supplier not added, Number needs to be of the format “05XXXXXXXX” where X are numbers.");
 		}
 
+
 		System.out.println("Enter email: ");
 		String email = sc.nextLine();
 
+
 		if (email.isEmpty() || email.equals(" ")) {
 			throw new Exception("Error: Supplier not added, Email is left blank.");
+
+
 		}
 
 		int atCount = 0;
@@ -353,11 +398,14 @@ public class MainClass {
 				atCount++;
 				Atindex = i;
 				break;
+
 			}
+
 		}
 
 		if (atCount != 1 || !(email.substring(Atindex, email.length()).contains(".")))
 			throw new Exception("Error: Supplier not added, email isn’t in the correct format.The prefix appears to the left of the @ symbol. The domain appears to the right of the @ symbol");
+
 
 		System.out.println("Enter tradeLicenseNo: ");
 		int tradeLicenseNo = sc.nextInt();
@@ -370,9 +418,9 @@ public class MainClass {
 
 		int noOfDigitsTL = String.valueOf(tradeLicenseNo).length();
 
-		if (noOfDigitsTL != 6) {
+		if (noOfDigitsTL != 6)
 			throw new Exception("Error: Supplier not added, Trade License number needs to be a 6 digit number.");
-		}
+
 
 		System.out.println("Enter VAT registration Number: ");
 		int vatRn = sc.nextInt();
@@ -380,18 +428,23 @@ public class MainClass {
 
 		if (vattext.isEmpty() || vattext.equals(" ")) {
 			throw new Exception("Error: Supplier not added, VAT Registration Number is left blank");
+
+
 		}
 
-		int noOfDigitsVAT = String.valueOf(tradeLicenseNo).length();
+		int noOfDigitsVAT = String.valueOf(vatRn).length();
+
 
 		if (noOfDigitsVAT != 7) {
 			throw new Exception("Error: Supplier not added, VAT RN needs to be a 7 digit number.");
 		}
 
+
 		Supplier s1 = new Supplier(suppID, companyName, number, email, tradeLicenseNo, vatRn);
 		suparr.add(s1);
 		System.out.println("Supplier added successfully");
 		return s1;
+
 	}//Function Add Supp End
 
 	public static int deleteSupplier(ArrayList<Supplier> list) {
@@ -438,4 +491,5 @@ public class MainClass {
 		}//for end
 		System.out.println("Read/View Unsuccessful: Supplier ID does not exist");
 	}//ViewSupplier End
-}
+
+}//Class end

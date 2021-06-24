@@ -7,14 +7,14 @@ public class Purchase {
     private int trnNo;
     private Date date;
     private Supplier supp;
-    private ArrayList<Item> it;
+    private Item it;
     private String paymentMode;
     private Date paymentDueDate;
     private double totalCost;
     private double vatAmt;
 
     //Constructor
-    public Purchase(int purchaseNo, int trnNo, Date date, Supplier supp, ArrayList<Item> it, String paymentMode, Date paymentDueDate, double totalCost, double vatAmt) {
+    public Purchase(int purchaseNo, int trnNo, Date date, Supplier supp, Item it, String paymentMode, Date paymentDueDate, double totalCost, double vatAmt) {
         this.purchaseNo = purchaseNo;
         this.trnNo = trnNo;
         this.date = date;
@@ -39,7 +39,7 @@ public class Purchase {
     public Supplier getSupp() {
         return supp;
     }
-    public ArrayList<Item> getIt() {
+    public Item getIt() {
         return it;
     }
     public String getPaymentMode() {
@@ -68,7 +68,7 @@ public class Purchase {
     public void setSupp(Supplier supp) {
         this.supp = supp;
     }
-    public void setIt(ArrayList<Item> it) {
+    public void setIt(Item it) {
         this.it = it;
     }
     public void setPaymentMode(String paymentMode) {
