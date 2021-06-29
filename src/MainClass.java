@@ -8,12 +8,13 @@ public class MainClass {
 
 		Item i1 = new Item(100, 20);
 
-		Supplier supp1 = new Supplier("supp101", "ABC", "0502375262", "abc@abc.com", 1001, 789);
-		Purchase pur1 = new Purchase(700, 2000, new Date(2002, 12, 23), supp1, i1, "Card", new Date(2013, 26, 12), 800.36, 10.45);
+		Supplier supp1 = new Supplier("supp1001", "ABC", "0502375262", "abc@abc.com", 1001, 789);
+		Purchase pur1 = new Purchase(100, 2000, new Date(2002, 12, 23), supp1, i1, "Card", new Date(2013, 26, 12), 800.36, 10.45);
 
 		ArrayList<Supplier> supplierList = new ArrayList<>();
 		ArrayList<Purchase> purchaseList = new ArrayList<>();
 		purchaseList.add(pur1);
+		supplierList.add(supp1);
 
 		System.out.println("""
 				Accounting System
@@ -46,7 +47,7 @@ public class MainClass {
 				case 2:
 					int index = removePurchase(purchaseList);
 					if (index == -1) {
-						System.out.println("Purchase Number Doesnt Exist");
+						//System.out.println("Unsuccessful. Purchase order does not exist");
 					} else purchaseList.remove(index);
 					break;
 
