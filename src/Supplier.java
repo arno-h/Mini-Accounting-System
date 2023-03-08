@@ -8,7 +8,8 @@ public class Supplier {
     private int vatRn;
 
     //Constructors
-    public Supplier(){}
+    public Supplier() {
+    }
 
     public Supplier(String supplierId, String companyName, String number, String email, int tradeLicenseNo, int vatRn) {
         this.supplierId = supplierId;
@@ -23,18 +24,23 @@ public class Supplier {
     public String getSupplierId() {
         return supplierId;
     }
+
     public String getCompanyName() {
         return companyName;
     }
-    public String getNumber()       {
+
+    public String getNumber() {
         return number;
     }
+
     public String getEmail() {
         return email;
     }
+
     public int getTradeLicenseNo() {
         return tradeLicenseNo;
     }
+
     public int getVatRn() {
         return vatRn;
     }
@@ -43,18 +49,23 @@ public class Supplier {
     public void setSupplierId(String supplierId) {
         this.supplierId = supplierId;
     }
+
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
+
     public void setNumber(String number) {
         this.number = number;
     }
+
     public void setEmail(String email) {
         this.email = email;
     }
+
     public void setTradeLicenseNo(int tradeLicenseNo) {
         this.tradeLicenseNo = tradeLicenseNo;
     }
+
     public void setVatRn(int vatRn) {
         this.vatRn = vatRn;
     }

@@ -30,27 +30,35 @@ public class Purchase {
     public int getPurchaseNo() {
         return purchaseNo;
     }
+
     public int getTrnNo() {
         return trnNo;
     }
+
     public Date getDate() {
         return date;
     }
+
     public Supplier getSupp() {
         return supp;
     }
+
     public Item getIt() {
         return it;
     }
+
     public String getPaymentMode() {
         return paymentMode;
     }
+
     public Date getPaymentDueDate() {
         return paymentDueDate;
     }
+
     public double getTotalCost() {
         return totalCost;
     }
+
     public double getVatAmt() {
         return vatAmt;
     }
@@ -59,27 +67,35 @@ public class Purchase {
     public void setPurchaseNo(int purchaseNo) {
         this.purchaseNo = purchaseNo;
     }
+
     public void setTrnNo(int trnNo) {
         this.trnNo = trnNo;
     }
+
     public void setDate(Date date) {
         this.date = date;
     }
+
     public void setSupp(Supplier supp) {
         this.supp = supp;
     }
+
     public void setIt(Item it) {
         this.it = it;
     }
+
     public void setPaymentMode(String paymentMode) {
         this.paymentMode = paymentMode;
     }
+
     public void setPaymentDueDate(Date paymentDueDate) {
         this.paymentDueDate = paymentDueDate;
     }
+
     public void setTotalCost(double totalCost) {
         this.totalCost = totalCost;
     }
+
     public void setVatAmt(double vatAmt) {
         this.vatAmt = vatAmt;
     }
