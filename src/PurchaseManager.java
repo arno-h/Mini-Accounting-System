@@ -1,13 +1,21 @@
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Scanner;
 
 public class PurchaseManager {
-    public static Purchase addPurchase(ArrayList<Purchase> list, ArrayList<Supplier> list2) throws Exception {
+
+    private Scanner scanner;
+    
+    public PurchaseManager() {
+        scanner = new Scanner(System.in);
+    }
+
+    public Purchase addPurchase(ArrayList<Purchase> purchases, ArrayList<Supplier> suppliers) throws Exception {
         System.out.println("*** Add Purchase ***");
         System.out.println("Enter Purchase Number: ");
         // purchase number
-        MainClass.sc.nextLine();
-        String number = MainClass.sc.nextLine();
+        scanner.nextLine();
+        String number = scanner.nextLine();
 
         int purchaseNo = 0;
         //If input empty
@@ -23,7 +31,7 @@ public class PurchaseManager {
                 throw new Exception("Unsuccessful. Invalid purchase Number");
             }
 
-            for (Purchase purchase : list) {
+            for (Purchase purchase : purchases) {
                 if (purchase.getPurchaseNo() == purchaseNo) {
                     throw new Exception("Unsuccessful. Purchase order already exists");
                 }
@@ -38,7 +46,7 @@ public class PurchaseManager {
 
         // TRN no.
         System.out.println("Enter TRN No.");
-        int trn_number = MainClass.sc.nextInt();
+        int trn_number = scanner.nextInt();
         if (trn_number <= 0) {
             throw new Exception("Unsuccessful. TRN number should be of 6 digits");
         }
@@ -53,19 +61,19 @@ public class PurchaseManager {
         System.out.println("Enter Day: ");
         Date currentDate = new Date();
 
-        int day = MainClass.sc.nextInt();
+        int day = scanner.nextInt();
         if (day < 1 || day > 31) {
             throw new Exception("Unsuccessful. Invalid purchase date.");
         }
 
         System.out.println("Enter Month: ");
-        int month = MainClass.sc.nextInt();
+        int month = scanner.nextInt();
         if (month < 1 || month > 12) {
             throw new Exception("Unsuccessful. Invalid purchase date.");
         }
 
         System.out.println("Enter Year: ");
-        int year = MainClass.sc.nextInt();
+        int year = scanner.nextInt();
         if (year <= 0) {
             throw new Exception("Unsuccessful. Invalid purchase date.");
         }
@@ -75,15 +83,15 @@ public class PurchaseManager {
 
         // Supplier ID
         System.out.println("Enter Supplier ID");
-        MainClass.sc.nextLine();
-        String id = MainClass.sc.nextLine();
+        scanner.nextLine();
+        String id = scanner.nextLine();
 
         //If supplier field is empty
         if (id.isEmpty() || id.equals(" ")) {
             throw new Exception("Error: No supplier details displayed, the input field cannot be empty/blank");
         }
         int count = 0;
-        for (Supplier supplier : list2) {
+        for (Supplier supplier : suppliers) {
             count++;
             if ((supplier.getSupplierId().equals(id))) {
                 break;
@@ -93,7 +101,7 @@ public class PurchaseManager {
         // Item No
         System.out.println("Enter Item No : ");
         //sc.nextLine();
-        String itemnotemp = MainClass.sc.nextLine();
+        String itemnotemp = scanner.nextLine();
 
         //If input empty
         if (itemnotemp.isEmpty() || itemnotemp.equals(" ")) {
@@ -104,7 +112,7 @@ public class PurchaseManager {
         //Item quanitity
         System.out.println("Enter Item quantity : ");
         //sc.nextLine();
-        String quanitity_temp = MainClass.sc.nextLine();
+        String quanitity_temp = scanner.nextLine();
 
         if (quanitity_temp.isEmpty() || quanitity_temp.equals(" ")) {
             throw new Exception("Unsuccessful. Cannot leave Purchase No field empty");
@@ -124,7 +132,7 @@ public class PurchaseManager {
 
         //Payment mode
         System.out.println("Enter Payment Mode : ");
-        String mode = MainClass.sc.nextLine();
+        String mode = scanner.nextLine();
         if (mode.isEmpty() || mode.equals(" ")) {
             throw new Exception("Unsuccessful. Mode of payment should be entered (Blank/Empty)");
         }
@@ -135,21 +143,21 @@ public class PurchaseManager {
         //Payment Due Date
         System.out.println("*Payment Due Date*");
         System.out.println("Enter Day: ");
-        String temp_due_day = MainClass.sc.nextLine();
+        String temp_due_day = scanner.nextLine();
         if (temp_due_day.isEmpty() || temp_due_day.equals(" ")) {
             throw new Exception("Unsuccessful. Payment due date should be entered");
         }
         int due_day = Integer.parseInt(temp_due_day);
 
         System.out.println("Enter Month: ");
-        String temp_due_month = MainClass.sc.nextLine();
+        String temp_due_month = scanner.nextLine();
         if (temp_due_month.isEmpty() || temp_due_month.equals(" ")) {
             throw new Exception("Unsuccessful. Payment due date should be entered");
         }
         int due_month = Integer.parseInt(temp_due_month);
 
         System.out.println("Enter Year: ");
-        String temp_due_year = MainClass.sc.nextLine();
+        String temp_due_year = scanner.nextLine();
         if (temp_due_year.isEmpty() || temp_due_year.equals(" ")) {
             throw new Exception("Unsuccessful. Payment due date should be entered");
         }
@@ -162,8 +170,8 @@ public class PurchaseManager {
 
         //total cost
         System.out.println("Enter total cost : ");
-        MainClass.sc.nextLine();
-        String tempcost = MainClass.sc.nextLine();
+        scanner.nextLine();
+        String tempcost = scanner.nextLine();
 
         if (tempcost.isEmpty() || tempcost.equals(" ")) {
             throw new Exception("Unsuccessful. Cost of the PO should be entered");
@@ -174,16 +182,16 @@ public class PurchaseManager {
         double vat = 0.05 * cost;
 
         // newPurchase Creation
-        Purchase newPurchase = new Purchase(purchaseNo, trn_number, purchaseDate, list2.get(count), itemObject, mode, purchaseDueDate, cost, vat);
+        Purchase newPurchase = new Purchase(purchaseNo, trn_number, purchaseDate, suppliers.get(count), itemObject, mode, purchaseDueDate, cost, vat);
         return newPurchase;
     }
 
-    public static int removePurchase(ArrayList<Purchase> list) {
+    public int removePurchase(ArrayList<Purchase> list) {
         System.out.println("*** Remove Purchase ***");
         System.out.println("Enter Purchase Number");
 
-        MainClass.sc.nextLine();
-        String number = MainClass.sc.nextLine();
+        scanner.nextLine();
+        String number = scanner.nextLine();
         //If input empty
         if (number.isEmpty() || number.equals(" ")) {
             System.out.println("Unsuccessful. Cannot leave Purchase No field empty");
@@ -215,12 +223,12 @@ public class PurchaseManager {
         return -1;
     }
 
-    public static void viewPurchase(ArrayList<Purchase> list) {
+    public void viewPurchase(ArrayList<Purchase> list) {
         System.out.println("*** View Purchase ***");
         System.out.println("Enter Purchase Number");
 
-        MainClass.sc.nextLine();
-        String number = MainClass.sc.nextLine();
+        scanner.nextLine();
+        String number = scanner.nextLine();
 
         //If input empty
         if (number.isEmpty() || number.equals(" ")) {

@@ -28,13 +28,15 @@ public class MainClass {
                 """);
         int choice = 0;
 
+        PurchaseManager purchaseManager = new PurchaseManager();
+
         while (true) {
             System.out.println("Enter your choice (1-6)");
             choice = sc.nextInt();
             switch (choice) {
                 case 1: {
                     try {
-                        Purchase p1 = PurchaseManager.addPurchase(purchaseList, supplierList);
+                        Purchase p1 = purchaseManager.addPurchase(purchaseList, supplierList);
                         purchaseList.add(p1); // remove if not call by refernece
                         break;
                     } catch (Exception e) {
@@ -44,14 +46,14 @@ public class MainClass {
                 }
 
                 case 2:
-                    int index = PurchaseManager.removePurchase(purchaseList);
+                    int index = purchaseManager.removePurchase(purchaseList);
                     if (index == -1) {
                         //System.out.println("Unsuccessful. Purchase order does not exist");
                     } else purchaseList.remove(index);
                     break;
 
                 case 3:
-                    PurchaseManager.viewPurchase(purchaseList);
+                    purchaseManager.viewPurchase(purchaseList);
                     break;
 
                 case 4: {
