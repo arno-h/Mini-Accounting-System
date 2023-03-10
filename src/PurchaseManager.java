@@ -9,7 +9,7 @@ public class PurchaseManager {
         inputHelper = new InputHelper();
     }
 
-    public Purchase addPurchase(Map<Integer, Purchase> purchases, Map<String, Supplier> suppliers) throws Exception {
+    public void addPurchase(Map<Integer, Purchase> purchases, Map<String, Supplier> suppliers) throws Exception {
         System.out.println("*** Add Purchase ***");
 
         System.out.println("Enter Purchase Number: ");
@@ -52,21 +52,20 @@ public class PurchaseManager {
         double cost = inputHelper.readDouble();
         double vat = 0.05 * cost;
 
-        return new Purchase(
+        purchases.put(purchaseNo, new Purchase(
                 purchaseNo, trn_number, purchaseDate, suppliers.get(id),
-                itemObject, mode, purchaseDueDate, cost, vat);
+                itemObject, mode, purchaseDueDate, cost, vat));
     }
 
-    public int removePurchase(Map<Integer, Purchase> purchases) throws Exception {
+    public void removePurchase(Map<Integer, Purchase> purchases) throws Exception {
         System.out.println("*** Remove Purchase ***");
         System.out.println("Enter Purchase Number");
         int purchaseId = inputHelper.readInt(1, 999, "Purchase number must be between 1..999");
         if (purchases.containsKey(purchaseId)) {
+            purchases.remove(purchaseId);
             System.out.println("Purchase order No " + purchaseId + " Deleted\n");
-            return purchaseId;
         }
         System.out.println("Unsuccessful. Purchase order does not exist");
-        return -1;
     }
 
     public void viewPurchase(Map<Integer, Purchase> purchases) throws Exception {

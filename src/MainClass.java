@@ -6,7 +6,7 @@ import java.util.Scanner;
 public class MainClass {
     static Scanner sc = new Scanner(System.in);
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
 
         Item i1 = new Item(100, 20);
 
@@ -29,61 +29,36 @@ public class MainClass {
                 \t5. Remove Supplier
                 \t6. View Supplier
                 """);
-        int choice = 0;
+        int choice;
 
         PurchaseManager purchaseManager = new PurchaseManager();
 
         while (true) {
             System.out.println("Enter your choice (1-6)");
             choice = sc.nextInt();
-            switch (choice) {
-                case 1: {
-                    try {
-                        Purchase purchase = purchaseManager.addPurchase(purchases, suppliers);
-                        purchases.put(purchase.getPurchaseNo(), purchase);
-                        break;
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
-                    }
-                    break;
-                }
-
-                case 2:
-                    int index = purchaseManager.removePurchase(purchases);
-                    if (index != -1) {
-                        purchases.remove(index);
-                    }
-                    break;
-
-                case 3:
-                    purchaseManager.viewPurchase(purchases);
-                    break;
-
-                case 4: {
-                    try {
+            try {
+                switch (choice) {
+                    case 1 -> purchaseManager.addPurchase(purchases, suppliers);
+                    case 2 -> purchaseManager.removePurchase(purchases);
+                    case 3 -> purchaseManager.viewPurchase(purchases);
+                    case 4 -> {
                         Supplier supplier = SupplierManager.addSupplier(suppliers);
                         suppliers.put(supplier.getSupplierId(), supplier);
-                        break;
-                    } catch (Exception e) {
-                        System.out.println(e.getMessage());
                     }
-                    break;
+                    case 5 -> {
+                        String id = SupplierManager.deleteSupplier(suppliers);
+                        if (id == null) {
+                            System.out.println("Supplier Doesnt Exist");
+                        } else suppliers.remove(id);
+                    }
+                    case 6 -> SupplierManager.viewSupplier(suppliers);
+                    default -> {
+                        System.out.println("Good bye!");
+                        return;
+                    }
                 }
-
-                case 5:
-                    String id = SupplierManager.deleteSupplier(suppliers);
-                    if (id == null) {
-                        System.out.println("Supplier Doesnt Exist");
-                    } else suppliers.remove(id);
-                    break;
-
-                case 6:
-                    SupplierManager.viewSupplier(suppliers);
-                    break;
-
-                default:
-                    System.out.println("Enter a value between 1-6");
-                    System.exit(0);
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
             }
         }
     }
