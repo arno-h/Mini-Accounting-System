@@ -1,20 +1,20 @@
-import java.util.ArrayList;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Purchase {
 
     private int purchaseNo;
     private int trnNo;
-    private Date date;
+    private LocalDate date;
     private Supplier supp;
     private Item it;
     private String paymentMode;
-    private Date paymentDueDate;
+    private LocalDate paymentDueDate;
     private double totalCost;
     private double vatAmt;
 
     //Constructor
-    public Purchase(int purchaseNo, int trnNo, Date date, Supplier supp, Item it, String paymentMode, Date paymentDueDate, double totalCost, double vatAmt) {
+    public Purchase(int purchaseNo, int trnNo, LocalDate date, Supplier supp, Item it,
+                    String paymentMode, LocalDate paymentDueDate, double totalCost, double vatAmt) {
         this.purchaseNo = purchaseNo;
         this.trnNo = trnNo;
         this.date = date;
@@ -35,7 +35,7 @@ public class Purchase {
         return trnNo;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
@@ -51,7 +51,7 @@ public class Purchase {
         return paymentMode;
     }
 
-    public Date getPaymentDueDate() {
+    public LocalDate getPaymentDueDate() {
         return paymentDueDate;
     }
 
@@ -72,7 +72,7 @@ public class Purchase {
         this.trnNo = trnNo;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -88,7 +88,7 @@ public class Purchase {
         this.paymentMode = paymentMode;
     }
 
-    public void setPaymentDueDate(Date paymentDueDate) {
+    public void setPaymentDueDate(LocalDate paymentDueDate) {
         this.paymentDueDate = paymentDueDate;
     }
 
@@ -115,6 +115,4 @@ public class Purchase {
                 "\n\tvatAmt = " + vatAmt +
                 "\n}";
     }
-
-
 }

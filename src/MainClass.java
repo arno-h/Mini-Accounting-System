@@ -1,4 +1,6 @@
-import java.util.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Scanner;
 
 public class MainClass {
     static Scanner sc = new Scanner(System.in);
@@ -8,7 +10,7 @@ public class MainClass {
         Item i1 = new Item(100, 20);
 
         Supplier supp1 = new Supplier("supp1001", "ABC", "0502375262", "abc@abc.com", 1001, 789);
-        Purchase pur1 = new Purchase(100, 2000, new Date(2002, 12, 23), supp1, i1, "Card", new Date(2013, 26, 12), 800.36, 10.45);
+        Purchase pur1 = new Purchase(100, 2000, LocalDate.of(2002, 12, 23), supp1, i1, "Card", LocalDate.of(2013, 12, 26), 800.36, 10.45);
 
         ArrayList<Supplier> supplierList = new ArrayList<>();
         ArrayList<Purchase> purchaseList = new ArrayList<>();
@@ -59,7 +61,7 @@ public class MainClass {
                 case 4: {
                     try {
                         Supplier s1 = SupplierManager.addSupplier(supplierList);
-                        supplierList.add(s1); // remove if not call by refernece
+                        supplierList.add(s1);
                         break;
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
@@ -81,8 +83,7 @@ public class MainClass {
                 default:
                     System.out.println("Enter a value between 1-6");
                     System.exit(0);
-            } //switch end
-        } //while end
-    } //Main End
-
-} //Class end
+            }
+        }
+    }
+}

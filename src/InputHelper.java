@@ -1,8 +1,8 @@
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class InputHelper {
-    private Scanner scanner;
+    private final Scanner scanner;
 
     public InputHelper() {
         scanner = new Scanner(System.in);
@@ -31,13 +31,13 @@ public class InputHelper {
         return value;
     }
 
-    public Date readDate(String dateName) throws Exception {
+    public LocalDate readDate(String dateName) throws Exception {
         System.out.println("Enter Day: ");
         int day = readInt(1, 31, "Unsuccessful. Invalid " + dateName);
         System.out.println("Enter Month: ");
         int month = readInt(1, 12, "Unsuccessful. Invalid " + dateName);
         System.out.println("Enter Year: ");
         int year = readInt(2000, 2100, "Unsuccessful. Invalid " + dateName);
-        return new Date(year, month, day);
+        return LocalDate.of(year, month, day);
     }
 }

@@ -1,5 +1,5 @@
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 
 public class PurchaseManager {
 
@@ -24,7 +24,7 @@ public class PurchaseManager {
         int trn_number = inputHelper.readInt(100000, 999999, "TRN number should be of 6 digits");
 
         System.out.println("*Date*");
-        Date purchaseDate = inputHelper.readDate("Purchase Date");
+        LocalDate purchaseDate = inputHelper.readDate("Purchase Date");
 
         System.out.println("Enter Supplier ID");
         String id = inputHelper.readString("Supplier cannot be empty/blank");
@@ -49,8 +49,8 @@ public class PurchaseManager {
         }
 
         System.out.println("*Payment Due Date*");
-        Date purchaseDueDate = inputHelper.readDate("Payment Due Date");
-        if (purchaseDueDate.before(purchaseDate)) {
+        LocalDate purchaseDueDate = inputHelper.readDate("Payment Due Date");
+        if (purchaseDueDate.isBefore(purchaseDate)) {
             throw new Exception("Unsuccessful. Purchase date should be before the Payment Due Date.");
         }
 
