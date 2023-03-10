@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class PurchaseManager {
 
     private Scanner scanner;
-    
+
     public PurchaseManager() {
         scanner = new Scanner(System.in);
     }
@@ -14,103 +14,56 @@ public class PurchaseManager {
         InputHelper inputHelper = new InputHelper();
 
         System.out.println("*** Add Purchase ***");
-        System.out.println("Enter Purchase Number: ");
-        // purchase number
-        scanner.nextLine();
 
-        int purchaseNo = inputHelper.readInt(1, 999,
-                "Unsuccessful. Invalid purchase Number");
+        System.out.println("Enter Purchase Number: ");
+        int purchaseNo = inputHelper.readInt(1, 999, "Invalid purchase Number");
         for (Purchase purchase : purchases) {
             if (purchase.getPurchaseNo() == purchaseNo) {
-                throw new Exception("Unsuccessful. Purchase order already exists");
+                throw new Exception("Purchase order already exists");
             }
         }
 
         System.out.println("Enter TRN No.");
-        int trn_number = inputHelper.readInt(100000, 999999,
-                "Unsuccessful. TRN number should be of 6 digits");
+        int trn_number = inputHelper.readInt(100000, 999999, "TRN number should be of 6 digits");
 
-        // Date
         System.out.println("*Date*");
+        Date purchaseDate = inputHelper.readDate("Purchase Date");
 
-        System.out.println("Enter Day: ");
-        int day = inputHelper.readInt(1, 31, "Unsuccessful. Invalid purchase date.");
-        System.out.println("Enter Month: ");
-        int month = inputHelper.readInt(1, 12, "Unsuccessful. Invalid purchase date.");
-        System.out.println("Enter Year: ");
-        int year = inputHelper.readInt(2000, 2100, "Unsuccessful. Invalid purchase date.");
-
-        Date purchaseDate = new Date(year, month, day);
-
-        // Supplier ID
         System.out.println("Enter Supplier ID");
-        scanner.nextLine();
-        String id = scanner.nextLine();
-
-        //If supplier field is empty
-        if (id.isEmpty() || id.equals(" ")) {
-            throw new Exception("Error: No supplier details displayed, the input field cannot be empty/blank");
-        }
+        String id = inputHelper.readString("Supplier cannot be empty/blank");
         int count = 0;
         for (Supplier supplier : suppliers) {
-            count++;
             if ((supplier.getSupplierId().equals(id))) {
                 break;
             }
+            count++;
         }
 
-        // Item No
         System.out.println("Enter Item No : ");
-        int itemno = inputHelper.readInt(1, 999999,
-                "Adding Purchase Unsuccessful. ItemNo field is empty");
-
-        //Item quanitity
+        int itemno = inputHelper.readInt(1, 999999, "Unsuccessful. ItemNo field needs to be between 1..999999");
         System.out.println("Enter item quantity : ");
-        int quantity = inputHelper.readInt(1, 999999,
-                "Unsuccessful. Quantity should be in numerical values");
-
-        // Item object creation
+        int quantity = inputHelper.readInt(1, 999999, "Unsuccessful. Quantity needs to be between 1..999999");
         Item itemObject = new Item(itemno, quantity);
 
-        //Payment mode
         System.out.println("Enter Payment Mode : ");
-        String mode = scanner.nextLine();
-        if (mode.isEmpty() || mode.equals(" ")) {
-            throw new Exception("Unsuccessful. Mode of payment should be entered (Blank/Empty)");
-        }
+        String mode = inputHelper.readString("Unsuccessful. Mode of payment cannot be blank/empty");
         if (!(mode.equals("card") || mode.equals("cheque") || mode.equals("bank transfer"))) {
             throw new Exception("Unsuccessful. Mode of payment should be either of card / cheque / bank transfer");
         }
 
-        //Payment Due Date
         System.out.println("*Payment Due Date*");
-        System.out.println("Enter Day: ");
-        day = inputHelper.readInt(1, 31, "Unsuccessful. Invalid purchase date.");
-        System.out.println("Enter Month: ");
-        month = inputHelper.readInt(1, 12, "Unsuccessful. Invalid purchase date.");
-        System.out.println("Enter Year: ");
-        year = inputHelper.readInt(2000, 2100, "Unsuccessful. Invalid purchase date.");
-        Date purchaseDueDate = new Date(year, month, day);
+        Date purchaseDueDate = inputHelper.readDate("Payment Due Date");
         if (purchaseDueDate.before(purchaseDate)) {
             throw new Exception("Unsuccessful. Purchase date should be before the Payment Due Date.");
         }
 
-        //total cost
         System.out.println("Enter total cost : ");
-        scanner.nextLine();
-        String tempcost = scanner.nextLine();
-
-        if (tempcost.isEmpty() || tempcost.equals(" ")) {
-            throw new Exception("Unsuccessful. Cost of the PO should be entered");
-        }
-        double cost = Double.parseDouble(tempcost);
-
-        // vat amount
+        double cost = inputHelper.readDouble();
         double vat = 0.05 * cost;
 
-        // newPurchase Creation
-        Purchase newPurchase = new Purchase(purchaseNo, trn_number, purchaseDate, suppliers.get(count), itemObject, mode, purchaseDueDate, cost, vat);
-        return newPurchase;
+        return new Purchase(
+                purchaseNo, trn_number, purchaseDate, suppliers.get(count),
+                itemObject, mode, purchaseDueDate, cost, vat);
     }
 
     public int removePurchase(ArrayList<Purchase> list) {
