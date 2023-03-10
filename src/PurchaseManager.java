@@ -1,18 +1,15 @@
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Scanner;
 
 public class PurchaseManager {
 
-    private Scanner scanner;
+    private final InputHelper inputHelper;
 
     public PurchaseManager() {
-        scanner = new Scanner(System.in);
+        inputHelper = new InputHelper();
     }
 
     public Purchase addPurchase(ArrayList<Purchase> purchases, ArrayList<Supplier> suppliers) throws Exception {
-        InputHelper inputHelper = new InputHelper();
-
         System.out.println("*** Add Purchase ***");
 
         System.out.println("Enter Purchase Number: ");
@@ -66,77 +63,31 @@ public class PurchaseManager {
                 itemObject, mode, purchaseDueDate, cost, vat);
     }
 
-    public int removePurchase(ArrayList<Purchase> list) {
+    public int removePurchase(ArrayList<Purchase> list) throws Exception {
         System.out.println("*** Remove Purchase ***");
         System.out.println("Enter Purchase Number");
-
-        scanner.nextLine();
-        String number = scanner.nextLine();
-        //If input empty
-        if (number.isEmpty() || number.equals(" ")) {
-            System.out.println("Unsuccessful. Cannot leave Purchase No field empty");
-            return -1;
-        }
-
-        try {
-            int temp = Integer.parseInt(number);
-
-            //Wrong Purchase Number format (should be a 3-digit number
-            if (temp > 999) {
-                System.out.println("Unsuccessful. Invalid purchase Number");
-                return -1;
+        int purchase = inputHelper.readInt(1, 999, "Purchase number must be between 1..999");
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getPurchaseNo() == purchase) {
+                System.out.println("Purchase order No " + purchase + " Deleted\n");
+                return i;
             }
-
-            for (int i = 0; i < list.size(); i++) {
-                if (list.get(i).getPurchaseNo() == temp) {
-                    System.out.println("Purchase order No " + temp + " Deleted\n");
-                    return i;
-                }
-            }
-            System.out.println("Unsuccessful. Purchase order does not exist");
         }
-        //If String given for Purchase Number
-        catch (NumberFormatException e) {
-            System.out.println("Unsuccessful. Invalid purchase Number Format");
-        }
-
+        System.out.println("Unsuccessful. Purchase order does not exist");
         return -1;
     }
 
-    public void viewPurchase(ArrayList<Purchase> list) {
+    public void viewPurchase(ArrayList<Purchase> list) throws Exception {
         System.out.println("*** View Purchase ***");
         System.out.println("Enter Purchase Number");
-
-        scanner.nextLine();
-        String number = scanner.nextLine();
-
-        //If input empty
-        if (number.isEmpty() || number.equals(" ")) {
-            System.out.println("Unsuccessful. Cannot leave Purchase No field empty");
-            return;
-        }
-
-        try {
-            int temp = Integer.parseInt(number);
-
-            //Wrong Purchase Number format (should be a 3-digit number
-            if (temp > 999) {
-                System.out.println("Unsuccessful. Invalid purchase Number");
+        int purchaseNo = inputHelper.readInt(1, 999, "Purchase number must be between 1..999");
+        for (Purchase purchase : list) {
+            if (purchase.getPurchaseNo() == purchaseNo) {
+                System.out.println("Purchase Information");
+                System.out.println(purchase);
                 return;
             }
-
-            for (Purchase purchase : list) {
-                if (purchase.getPurchaseNo() == temp) {
-                    System.out.println("Purchase Information");
-                    System.out.println(purchase.toString());
-                    return;
-                }
-            }
-            System.out.println("Unsuccessful. Purchase order does not exist");
         }
-        //If String given for Purchase Number
-        catch (NumberFormatException e) {
-            System.out.println("Unsuccessful. Invalid purchase Number Format");
-        }
-    } //Function View Purchase End
+        System.out.println("Unsuccessful. Purchase order does not exist");
+    }
 }
