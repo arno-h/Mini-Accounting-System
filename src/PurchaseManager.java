@@ -1,5 +1,5 @@
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.Map;
 
 public class PurchaseManager {
 
@@ -9,15 +9,13 @@ public class PurchaseManager {
         inputHelper = new InputHelper();
     }
 
-    public Purchase addPurchase(ArrayList<Purchase> purchases, ArrayList<Supplier> suppliers) throws Exception {
+    public Purchase addPurchase(Map<Integer, Purchase> purchases, Map<String, Supplier> suppliers) throws Exception {
         System.out.println("*** Add Purchase ***");
 
         System.out.println("Enter Purchase Number: ");
         int purchaseNo = inputHelper.readInt(1, 999, "Invalid purchase Number");
-        for (Purchase purchase : purchases) {
-            if (purchase.getPurchaseNo() == purchaseNo) {
-                throw new Exception("Purchase order already exists");
-            }
+        if (purchases.containsKey(purchaseNo)) {
+            throw new Exception("Purchase order already exists");
         }
 
         System.out.println("Enter TRN No.");
@@ -28,12 +26,8 @@ public class PurchaseManager {
 
         System.out.println("Enter Supplier ID");
         String id = inputHelper.readString("Supplier cannot be empty/blank");
-        int count = 0;
-        for (Supplier supplier : suppliers) {
-            if ((supplier.getSupplierId().equals(id))) {
-                break;
-            }
-            count++;
+        if (!suppliers.containsKey(id)) {
+            throw new Exception("Supplier does not exist");
         }
 
         System.out.println("Enter Item No : ");
@@ -59,34 +53,30 @@ public class PurchaseManager {
         double vat = 0.05 * cost;
 
         return new Purchase(
-                purchaseNo, trn_number, purchaseDate, suppliers.get(count),
+                purchaseNo, trn_number, purchaseDate, suppliers.get(id),
                 itemObject, mode, purchaseDueDate, cost, vat);
     }
 
-    public int removePurchase(ArrayList<Purchase> list) throws Exception {
+    public int removePurchase(Map<Integer, Purchase> purchases) throws Exception {
         System.out.println("*** Remove Purchase ***");
         System.out.println("Enter Purchase Number");
-        int purchase = inputHelper.readInt(1, 999, "Purchase number must be between 1..999");
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getPurchaseNo() == purchase) {
-                System.out.println("Purchase order No " + purchase + " Deleted\n");
-                return i;
-            }
+        int purchaseId = inputHelper.readInt(1, 999, "Purchase number must be between 1..999");
+        if (purchases.containsKey(purchaseId)) {
+            System.out.println("Purchase order No " + purchaseId + " Deleted\n");
+            return purchaseId;
         }
         System.out.println("Unsuccessful. Purchase order does not exist");
         return -1;
     }
 
-    public void viewPurchase(ArrayList<Purchase> list) throws Exception {
+    public void viewPurchase(Map<Integer, Purchase> purchases) throws Exception {
         System.out.println("*** View Purchase ***");
         System.out.println("Enter Purchase Number");
         int purchaseNo = inputHelper.readInt(1, 999, "Purchase number must be between 1..999");
-        for (Purchase purchase : list) {
-            if (purchase.getPurchaseNo() == purchaseNo) {
-                System.out.println("Purchase Information");
-                System.out.println(purchase);
-                return;
-            }
+        if (purchases.containsKey(purchaseNo)) {
+            System.out.println("Purchase Information");
+            System.out.println(purchases.get(purchaseNo));
+            return;
         }
         System.out.println("Unsuccessful. Purchase order does not exist");
     }

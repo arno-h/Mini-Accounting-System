@@ -1,5 +1,6 @@
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class MainClass {
@@ -12,10 +13,10 @@ public class MainClass {
         Supplier supp1 = new Supplier("supp1001", "ABC", "0502375262", "abc@abc.com", 1001, 789);
         Purchase pur1 = new Purchase(100, 2000, LocalDate.of(2002, 12, 23), supp1, i1, "Card", LocalDate.of(2013, 12, 26), 800.36, 10.45);
 
-        ArrayList<Supplier> supplierList = new ArrayList<>();
-        ArrayList<Purchase> purchaseList = new ArrayList<>();
-        purchaseList.add(pur1);
-        supplierList.add(supp1);
+        Map<String, Supplier> suppliers = new HashMap<>();
+        Map<Integer, Purchase> purchases = new HashMap<>();
+        purchases.put(pur1.getPurchaseNo(), pur1);
+        suppliers.put(supp1.getSupplierId(), supp1);
 
         System.out.println("""
                 Accounting System
@@ -38,8 +39,8 @@ public class MainClass {
             switch (choice) {
                 case 1: {
                     try {
-                        Purchase p1 = purchaseManager.addPurchase(purchaseList, supplierList);
-                        purchaseList.add(p1); // remove if not call by refernece
+                        Purchase purchase = purchaseManager.addPurchase(purchases, suppliers);
+                        purchases.put(purchase.getPurchaseNo(), purchase);
                         break;
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
@@ -48,20 +49,20 @@ public class MainClass {
                 }
 
                 case 2:
-                    int index = purchaseManager.removePurchase(purchaseList);
-                    if (index == -1) {
-                        //System.out.println("Unsuccessful. Purchase order does not exist");
-                    } else purchaseList.remove(index);
+                    int index = purchaseManager.removePurchase(purchases);
+                    if (index != -1) {
+                        purchases.remove(index);
+                    }
                     break;
 
                 case 3:
-                    purchaseManager.viewPurchase(purchaseList);
+                    purchaseManager.viewPurchase(purchases);
                     break;
 
                 case 4: {
                     try {
-                        Supplier s1 = SupplierManager.addSupplier(supplierList);
-                        supplierList.add(s1);
+                        Supplier supplier = SupplierManager.addSupplier(suppliers);
+                        suppliers.put(supplier.getSupplierId(), supplier);
                         break;
                     } catch (Exception e) {
                         System.out.println(e.getMessage());
@@ -70,14 +71,14 @@ public class MainClass {
                 }
 
                 case 5:
-                    int pos = SupplierManager.deleteSupplier(supplierList);
-                    if (pos == -1) {
+                    String id = SupplierManager.deleteSupplier(suppliers);
+                    if (id == null) {
                         System.out.println("Supplier Doesnt Exist");
-                    } else supplierList.remove(pos);
+                    } else suppliers.remove(id);
                     break;
 
                 case 6:
-                    SupplierManager.viewSupplier(supplierList);
+                    SupplierManager.viewSupplier(suppliers);
                     break;
 
                 default:

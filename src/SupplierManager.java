@@ -1,21 +1,17 @@
-import java.util.ArrayList;
+import java.util.Map;
 import java.util.Scanner;
 
 public class SupplierManager {
-    public static Supplier addSupplier(ArrayList<Supplier> suparr) throws Exception {
+    public static Supplier addSupplier(Map<String, Supplier> suppliers) throws Exception {
         Scanner sc = new Scanner(System.in);
         System.out.println("Enter the supplier details: ");
         System.out.println("Enter supplierID: ");
         String suppID = sc.nextLine();
 
-        for (int i = 0; i < suparr.size(); i++) {
-
-            if (suparr.get(i).getSupplierId() == suppID) {
-                throw new IdDoesNotExistException("Error: Supplier not added, SupplierID already exists in the system.");
-            }
+        if (suppliers.containsKey(suppID)) {
+            throw new IdDoesNotExistException("Error: Supplier not added, SupplierID already exists in the system.");
         }
 
-        //If supplier field is empty
         if (suppID.isEmpty() || suppID.equals(" ")) {
             throw new Exception("Error: The Supplier ID input field cannot be empty/blank");
 
@@ -96,54 +92,48 @@ public class SupplierManager {
         }
 
         Supplier s1 = new Supplier(suppID, companyName, number, email, tradeLicenseNo, vatRn);
-        suparr.add(s1);
+        suppliers.put(suppID, s1);
         System.out.println("Supplier added successfully");
         return s1;
 
-    } //Function Add Supp End
+    }
 
-    public static int deleteSupplier(ArrayList<Supplier> list) {
+    public static String deleteSupplier(Map<String, Supplier> suppliers) {
         System.out.println("*** delete Supplier ***");
         System.out.println("Enter Supplier ID");
         MainClass.sc.nextLine();
         String id = MainClass.sc.nextLine();
 
-        //If supplier field is empty
         if (id.isEmpty() || id.equals(" ")) {
             System.out.println("Error: The input field cannot be empty/blank.");
-            return -1;
-        } //if end
+            return null;
+        }
 
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).getSupplierId().equals(id)) {
-                System.out.println("Supplier successfully deleted");
-                return i;
-            } //if end
-        } //for end
+        if (suppliers.containsKey(id)) {
+            System.out.println("Supplier successfully deleted");
+            return id;
+        }
 
         System.out.println("Supplier does not exist in the database so it isn't deleted.");
-        return -1;
-    } //Function Delete Supp End
+        return null;
+    }
 
-    public static void viewSupplier(ArrayList<Supplier> list) {
+    public static void viewSupplier(Map<String, Supplier> suppliers) {
         System.out.println("*** View Supplier ***");
         System.out.println("Enter Supplier ID");
         MainClass.sc.nextLine();
         String id = MainClass.sc.nextLine();
 
-        //If supplier field is empty
         if (id.isEmpty() || id.equals(" ")) {
             System.out.println("Error: No supplier details displayed, the input field cannot be empty/blank");
             return;
-        } //if end
+        }
 
-        for (Supplier supplier : list) {
-            if (supplier.getSupplierId().equals(id)) {
-                System.out.println("Supplier Information");
-                System.out.println(supplier.toString());
-                return;
-            } //if end
-        } //for end
+        if (suppliers.containsKey(id)) {
+            System.out.println("Supplier Information");
+            System.out.println(suppliers.get(id));
+            return;
+        }
         System.out.println("Read/View Unsuccessful: Supplier ID does not exist");
-    } //ViewSupplier End
+    }
 }
