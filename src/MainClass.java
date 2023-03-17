@@ -1,3 +1,4 @@
+import java.io.PrintWriter;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
@@ -31,7 +32,8 @@ public class MainClass {
                 """);
         int choice;
 
-        PurchaseManager purchaseManager = new PurchaseManager(new Scanner(System.in));
+        PurchaseManager purchaseManager = new PurchaseManager(
+                new Scanner(System.in), new PrintWriter(System.out, true));
 
         while (true) {
             System.out.println("Enter your choice (1-6)");
