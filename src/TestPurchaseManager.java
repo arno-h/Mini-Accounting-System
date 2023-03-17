@@ -53,4 +53,21 @@ public class TestPurchaseManager {
         String message = out.toString();
         Assert.assertTrue(message.contains("Unsuccessful."));
     }
+
+    @Test
+    public void testViewPurchase() throws Exception {
+        // given
+        Scanner scanner = new Scanner("1\n");
+        StringWriter out = new StringWriter();
+        PrintWriter printWriter = new PrintWriter(out);
+        PurchaseManager purchaseManager = new PurchaseManager(scanner, printWriter);
+        // when
+        purchaseManager.viewPurchase(purchaseMap); // show 1
+        // then
+        String message = out.toString();
+        Assert.assertTrue(message.contains("Purchase Information"));
+        Assert.assertTrue(message.contains("'card'"));
+        Assert.assertTrue(message.contains("100.0"));
+        Assert.assertTrue(message.contains("trnNo = 123"));
+    }
 }
