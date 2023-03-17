@@ -1,12 +1,13 @@
 import java.time.LocalDate;
 import java.util.Map;
+import java.util.Scanner;
 
 public class PurchaseManager {
 
     private final InputHelper inputHelper;
 
-    public PurchaseManager() {
-        inputHelper = new InputHelper();
+    public PurchaseManager(Scanner scanner) {
+        inputHelper = new InputHelper(scanner);
     }
 
     public void addPurchase(Map<Integer, Purchase> purchases, Map<String, Supplier> suppliers) throws Exception {

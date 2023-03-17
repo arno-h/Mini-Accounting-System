@@ -31,7 +31,7 @@ public class MainClass {
                 """);
         int choice;
 
-        PurchaseManager purchaseManager = new PurchaseManager();
+        PurchaseManager purchaseManager = new PurchaseManager(new Scanner(System.in));
 
         while (true) {
             System.out.println("Enter your choice (1-6)");

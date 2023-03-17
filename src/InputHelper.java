@@ -4,8 +4,8 @@ import java.util.Scanner;
 public class InputHelper {
     private final Scanner scanner;
 
-    public InputHelper() {
-        scanner = new Scanner(System.in);
+    public InputHelper(Scanner scanner) {
+        this.scanner = scanner;
     }
 
     public int readInt(int lowerBound, int upperBound, String errorMessage) throws Exception {
