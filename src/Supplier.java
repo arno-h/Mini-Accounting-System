@@ -77,7 +77,7 @@ public class Supplier {
                 "supplierId = " + supplierId +
                 "\n\tcompanyName = '" + companyName + '\'' +
                 "\n\tnumber = '" + number + '\'' +
-                "\n\tnemail = '" + email + '\'' +
+                "\n\temail = '" + email + '\'' +
                 "\n\ttradeLicenseNo = " + tradeLicenseNo +
                 "\n\tvatRn = " + vatRn +
                 "\n}";

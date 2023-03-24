@@ -34,7 +34,7 @@ public class SupplierManager {
 
         }
 
-        if (!(number.substring(0, 2).equals("05")) || number.length() != 10) {
+        if (!(number.startsWith("05")) || number.length() != 10) {
             throw new Exception("Error: Supplier not added, Number needs to be of the format “05XXXXXXXX” where X are numbers.");
         }
 
@@ -47,27 +47,26 @@ public class SupplierManager {
         }
 
         int atCount = 0;
-        int Atindex = 0;
-        boolean domainfound = false;
+        int atIndex = 0;
         for (int i = 0; i < email.length(); i++) {
             if (email.charAt(i) == '@') {
                 atCount++;
-                Atindex = i;
+                atIndex = i;
                 break;
 
             }
 
         }
 
-        if (atCount != 1 || !(email.substring(Atindex, email.length()).contains(".")))
+        if (atCount != 1 || !(email.substring(atIndex).contains(".")))
             throw new Exception("Error: Supplier not added, email isn’t in the correct format.The prefix appears to the left of the @ symbol. The domain appears to the right of the @ symbol");
 
         System.out.println("Enter tradeLicenseNo: ");
         int tradeLicenseNo = sc.nextInt();
 
-        String texttradeLicense = Integer.toString(tradeLicenseNo);
+        String textTradeLicense = Integer.toString(tradeLicenseNo);
 
-        if (texttradeLicense.isEmpty() || texttradeLicense.equals(" ")) {
+        if (textTradeLicense.isEmpty() || textTradeLicense.equals(" ")) {
             throw new Exception("Error: Supplier not added, Trade Licence No. is left blank.");
         }
 
@@ -78,9 +77,9 @@ public class SupplierManager {
 
         System.out.println("Enter VAT registration Number: ");
         int vatRn = sc.nextInt();
-        String vattext = Integer.toString(vatRn);
+        String vatText = Integer.toString(vatRn);
 
-        if (vattext.isEmpty() || vattext.equals(" ")) {
+        if (vatText.isEmpty() || vatText.equals(" ")) {
             throw new Exception("Error: Supplier not added, VAT Registration Number is left blank");
 
         }

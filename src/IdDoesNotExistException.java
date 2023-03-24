@@ -1,5 +1,5 @@
 public class IdDoesNotExistException extends Exception {
-    private String message;
+    private final String message;
 
     public IdDoesNotExistException(String message) {
         this.message = message;
@@ -8,10 +8,6 @@ public class IdDoesNotExistException extends Exception {
     @Override
     public String getMessage() {
         return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
     }
 
     @Override

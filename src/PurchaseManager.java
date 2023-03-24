@@ -35,10 +35,10 @@ public class PurchaseManager {
         }
 
         out.println("Enter Item No : ");
-        int itemno = inputHelper.readInt(1, 999999, "Unsuccessful. ItemNo field needs to be between 1..999999");
+        int itemNo = inputHelper.readInt(1, 999999, "Unsuccessful. ItemNo field needs to be between 1..999999");
         out.println("Enter item quantity : ");
         int quantity = inputHelper.readInt(1, 999999, "Unsuccessful. Quantity needs to be between 1..999999");
-        Item itemObject = new Item(itemno, quantity);
+        Item itemObject = new Item(itemNo, quantity);
 
         out.println("Enter Payment Mode : ");
         String mode = inputHelper.readString("Unsuccessful. Mode of payment cannot be blank/empty");

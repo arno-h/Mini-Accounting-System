@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Scanner;
 
 public class MainClass {
-    static Scanner sc = new Scanner(System.in);
+    static final Scanner sc = new Scanner(System.in);
 
     public static void main(String[] args) {
 
